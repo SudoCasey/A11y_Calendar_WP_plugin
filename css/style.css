@@ -1,0 +1,44 @@
+.a11y-calendar {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.a11y-calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.a11y-calendar-nav .prev-month {
+    text-align: left;
+}
+
+.a11y-calendar-nav .next-month {
+    text-align: right;
+}
+
+.a11y-calendar table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.a11y-calendar caption {
+    caption-side: top;
+    margin-bottom: 10px;
+}
+
+.a11y-calendar caption h2 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.a11y-calendar th, .a11y-calendar td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.a11y-calendar th {
+    background-color: #f4f4f4;
+}
