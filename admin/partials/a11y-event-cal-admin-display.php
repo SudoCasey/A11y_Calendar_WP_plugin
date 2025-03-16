@@ -44,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['a11y_event_title'], $
 
     update_option('a11y_events', $events);
 
-    // Redirect to "View Events" page using the 'init' hook to prevent header issues
+    // Redirect to "View Events" page
     add_action('init', function() {
         wp_safe_redirect(admin_url('admin.php?page=a11y-event-calendar'));
         exit;
     });
 
-    return; // Stop further processing
+    return;
 }
 
 ?>
