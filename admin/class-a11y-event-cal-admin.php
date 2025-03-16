@@ -3,101 +3,71 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://test.com
- * @since      1.0.0
- *
  * @package    A11y_Event_Cal
  * @subpackage A11y_Event_Cal/admin
  */
 
-/**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @package    A11y_Event_Cal
- * @subpackage A11y_Event_Cal/admin
- * @author     Casey <test@gmail.com>
- */
 class A11y_Event_Cal_Admin {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
+    private $plugin_name;
+    private $version;
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
+    public function __construct($plugin_name, $version) {
+        $this->plugin_name = $plugin_name;
+        $this->version = $version;
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
+        add_action('admin_menu', array($this, 'add_admin_menu'));
+        add_action('admin_init', array($this, 'register_settings'));
+    }
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+    public function enqueue_styles() {
+        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/a11y-event-cal-admin.css', array(), $this->version, 'all');
+    }
 
-	}
+    public function enqueue_scripts() {
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/a11y-event-cal-admin.js', array('jquery'), $this->version, false);
+    }
 
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
+    public function add_admin_menu() {
+        add_menu_page(
+            'Event Calendar', 
+            'Event Calendar', 
+            'manage_options', 
+            'a11y-event-calendar', 
+            array($this, 'view_events_page'), // Default page when clicking the menu
+            'dashicons-calendar-alt', 
+            20
+        );
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in A11y_Event_Cal_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The A11y_Event_Cal_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+        add_submenu_page(
+            'a11y-event-calendar', 
+            'View Events', 
+            'View Events', 
+            'manage_options', 
+            'a11y-event-calendar', 
+            array($this, 'view_events_page')
+        );
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/a11y-event-cal-admin.css', array(), $this->version, 'all' );
+        add_submenu_page(
+            'a11y-event-calendar', 
+            'Add Event', 
+            'Add Event', 
+            'manage_options', 
+            'a11y-event-calendar-add', 
+            array($this, 'add_event_page')
+        );
+    }
 
-	}
+    public function view_events_page() {
+        include plugin_dir_path(__FILE__) . 'partials/a11y-event-cal-view-events.php';
+    }
 
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
+    public function add_event_page() {
+        include plugin_dir_path(__FILE__) . 'partials/a11y-event-cal-admin-display.php';
+    }
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in A11y_Event_Cal_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The A11y_Event_Cal_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/a11y-event-cal-admin.js', array( 'jquery' ), $this->version, false );
-
-	}
-
+    public function register_settings() {
+        register_setting('a11y_event_calendar_group', 'a11y_event_title');
+        register_setting('a11y_event_calendar_group', 'a11y_event_dates');
+    }
 }

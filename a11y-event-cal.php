@@ -36,4 +36,9 @@ function a11y_calendar_update() {
 }
 add_action('wp_ajax_a11y_calendar_update', 'a11y_calendar_update');
 add_action('wp_ajax_nopriv_a11y_calendar_update', 'a11y_calendar_update');
+
+if (is_admin()) {
+    require_once plugin_dir_path(__FILE__) . 'admin/class-a11y-event-cal-admin.php';
+    new A11y_Event_Cal_Admin('a11y-event-cal', '1.0.0');
+}
 ?>

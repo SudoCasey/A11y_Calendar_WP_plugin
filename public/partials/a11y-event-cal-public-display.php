@@ -11,6 +11,7 @@
  * @package    A11y_Event_Cal
  * @subpackage A11y_Event_Cal/public/partials
  */
+    if (function_exists('display_event_dates')) {
+        display_event_dates();
+    }
 ?>
-
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
