@@ -9,7 +9,7 @@ Event Details:
  - Event URL
  - Event Status (Cancelled: true/false)
 
-# TODO:
+## TODO:
  - Display events on registered date on the calendar
  - Settings page
    - Start weeks on Sunday/Monday
